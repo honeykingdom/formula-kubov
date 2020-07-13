@@ -96,7 +96,7 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
 const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${window.location.host}`;
 const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${window.location.host}`;
 const tvPlayerUrl =
-  'https://news.sportbox.ru/Vidy_sporta/Avtosport/Formula_1/spbvideo_NI1208692_translation_Gran_pri_Shtirii';
+  '//news.sportbox.ru/Vidy_sporta/Avtosport/Formula_1/spbvideo_NI1208692_translation_Gran_pri_Shtirii';
 
 export default function App() {
   return (
@@ -108,9 +108,7 @@ export default function App() {
         <Copyright>
           Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link>{' '}
           - Repository:{' '}
-          <Link href="https://github.com/honeykingdom/formula-kubov">
-            GitHub
-          </Link>
+          <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
         </Copyright>
       </TvPlayer>
       <GlobalStyle />
