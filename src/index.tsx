@@ -95,15 +95,13 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
 
 const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${window.location.host}`;
 const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${window.location.host}`;
-const tvPlayerUrl =
-  '//news.sportbox.ru/Vidy_sporta/Avtosport/Formula_1/spbvideo_NI1211620_translation_Gran_pri_Vengrii_Kvalifikacija';
 
 const App = () => (
   <AppRoot>
     <Player src={playerUrl} />
     <Chat src={chatUrl} />
     <TvPlayer>
-      <TvPlayerIframe src={tvPlayerUrl} />
+      <TvPlayerIframe src={process.env.REACT_APP_TV_PLAYER_URL} />
       <Copyright>
         Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
         Repository:{' '}
