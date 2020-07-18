@@ -98,23 +98,21 @@ const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${windo
 const tvPlayerUrl =
   '//news.sportbox.ru/Vidy_sporta/Avtosport/Formula_1/spbvideo_NI1211620_translation_Gran_pri_Vengrii_Kvalifikacija';
 
-export default function App() {
-  return (
-    <AppRoot>
-      <Player src={playerUrl} />
-      <Chat src={chatUrl} />
-      <TvPlayer>
-        <TvPlayerIframe src={tvPlayerUrl} />
-        <Copyright>
-          Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link>{' '}
-          - Repository:{' '}
-          <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
-        </Copyright>
-      </TvPlayer>
-      <GlobalStyle />
-    </AppRoot>
-  );
-}
+const App = () => (
+  <AppRoot>
+    <Player src={playerUrl} />
+    <Chat src={chatUrl} />
+    <TvPlayer>
+      <TvPlayerIframe src={tvPlayerUrl} />
+      <Copyright>
+        Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
+        Repository:{' '}
+        <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
+      </Copyright>
+    </TvPlayer>
+    <GlobalStyle />
+  </AppRoot>
+);
 
 ReactDOM.render(
   <React.StrictMode>
