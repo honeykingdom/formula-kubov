@@ -96,7 +96,7 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
 const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${window.location.host}`;
 const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${window.location.host}`;
 const tvPlayerUrl =
-  '//news.sportbox.ru/Vidy_sporta/Avtosport/Formula_1/spbvideo_NI1208692_translation_Gran_pri_Shtirii';
+  '//news.sportbox.ru/Vidy_sporta/Avtosport/Formula_1/spbvideo_NI1211620_translation_Gran_pri_Vengrii_Kvalifikacija';
 
 export default function App() {
   return (
