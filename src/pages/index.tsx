@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -93,15 +92,15 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
   }
 `;
 
-const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${window.location.host}`;
-const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${window.location.host}`;
+const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.GATSBY_HOSTNAME}`;
+const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${process.env.GATSBY_HOSTNAME}`;
 
 const App = () => (
   <AppRoot>
     <Player src={playerUrl} />
     <Chat src={chatUrl} />
     <TvPlayer>
-      <TvPlayerIframe src={process.env.REACT_APP_TV_PLAYER_URL} />
+      <TvPlayerIframe src={process.env.GATSBY_TV_PLAYER_URL} />
       <Copyright>
         Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
         Repository:{' '}
@@ -112,9 +111,4 @@ const App = () => (
   </AppRoot>
 );
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+export default App;
