@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -44,32 +44,64 @@ const TvPlayer = styled.div`
   background-color: #18181b;
   overflow: hidden;
 `;
-const TvPlayerIframe = styled(Iframe)`
+const TvPlayerIframe = styled(Iframe)<{ $isOnePlayer: boolean }>`
   width: 990px;
 
-  @media (min-width: 1280px) {
-    transform: translate(9px, -113px) scale(1.08);
-    height: 616px;
-  }
-  @media (min-width: 1365px) {
-    transform: translate(9px, -105px) scale(1.113);
-    height: 644px;
-  }
-  @media (min-width: 1440px) {
-    transform: translate(10px, -89px) scale(1.195);
-  }
-  @media (min-width: 1600px) {
-    transform: translate(12px, -56px) scale(1.368);
-  }
-  @media (min-width: 1680px) {
-    transform: translate(12px, -39px) scale(1.456);
-  }
-  @media (min-width: 1920px) {
-    transform: translate(15px, 12px) scale(1.715);
-  }
-  @media (min-width: 2540px) {
-    transform: translate(20px, 147px) scale(2.412);
-  }
+  ${(p) =>
+    p.$isOnePlayer &&
+    css`
+      @media (min-width: 1280px) {
+        height: 646px;
+        transform: translate(9px, -133px) scale(1.052);
+      }
+      @media (min-width: 1365px) {
+        height: 673px;
+        transform: translate(9px, -126px) scale(1.087);
+      }
+      @media (min-width: 1440px) {
+        transform: translate(10px, -112px) scale(1.166);
+      }
+      @media (min-width: 1600px) {
+        transform: translate(11px, -82px) scale(1.336);
+      }
+      @media (min-width: 1680px) {
+        transform: translate(12px, -67px) scale(1.421);
+      }
+      @media (min-width: 1920px) {
+        transform: translate(15px, -21px) scale(1.677);
+      }
+      @media (min-width: 2540px) {
+        transform: translate(20px, 101px) scale(2.354);
+      }
+    `};
+
+  ${(p) =>
+    !p.$isOnePlayer &&
+    css`
+      @media (min-width: 1280px) {
+        height: 616px;
+        transform: translate(9px, -113px) scale(1.08);
+      }
+      @media (min-width: 1365px) {
+        height: 644px;
+        transform: translate(9px, -105px) scale(1.113);
+      }
+      @media (min-width: 1440px) {
+        transform: translate(10px, -89px) scale(1.195);
+      }
+      @media (min-width: 1600px) {
+        transform: translate(12px, -56px) scale(1.368);
+      }
+      @media (min-width: 1680px) {
+        transform: translate(12px, -39px) scale(1.456);
+      }
+      @media (min-width: 1920px) {
+        transform: translate(15px, 12px) scale(1.715);
+      }
+      @media (min-width: 2540px) {
+        transform: translate(20px, 147px) scale(2.412);
+      }
+    `};
 `;
 const Copyright = styled.div`
   position: absolute;
@@ -94,13 +126,17 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
 
 const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.GATSBY_HOSTNAME}`;
 const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${process.env.GATSBY_HOSTNAME}`;
+const isOnePlayer = JSON.parse(process.env.GATSBY_TV_PLAYER_IS_ONE || 'false');
 
 const App = () => (
   <AppRoot>
     <Player src={playerUrl} />
     <Chat src={chatUrl} />
     <TvPlayer>
-      <TvPlayerIframe src={process.env.GATSBY_TV_PLAYER_URL} />
+      <TvPlayerIframe
+        src={process.env.GATSBY_TV_PLAYER_URL}
+        $isOnePlayer={isOnePlayer}
+      />
       <Copyright>
         Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
         Repository:{' '}
