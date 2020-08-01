@@ -48,60 +48,57 @@ const TvPlayerIframe = styled(Iframe)<{ $isOnePlayer: boolean }>`
   width: 990px;
 
   ${(p) =>
-    p.$isOnePlayer &&
-    css`
-      @media (min-width: 1280px) {
-        height: 646px;
-        transform: translate(9px, -133px) scale(1.052);
-      }
-      @media (min-width: 1365px) {
-        height: 673px;
-        transform: translate(9px, -126px) scale(1.087);
-      }
-      @media (min-width: 1440px) {
-        transform: translate(10px, -112px) scale(1.166);
-      }
-      @media (min-width: 1600px) {
-        transform: translate(11px, -82px) scale(1.336);
-      }
-      @media (min-width: 1680px) {
-        transform: translate(12px, -67px) scale(1.421);
-      }
-      @media (min-width: 1920px) {
-        transform: translate(15px, -21px) scale(1.677);
-      }
-      @media (min-width: 2540px) {
-        transform: translate(20px, 101px) scale(2.354);
-      }
-    `};
-
-  ${(p) =>
-    !p.$isOnePlayer &&
-    css`
-      @media (min-width: 1280px) {
-        height: 616px;
-        transform: translate(9px, -113px) scale(1.08);
-      }
-      @media (min-width: 1365px) {
-        height: 644px;
-        transform: translate(9px, -105px) scale(1.113);
-      }
-      @media (min-width: 1440px) {
-        transform: translate(10px, -89px) scale(1.195);
-      }
-      @media (min-width: 1600px) {
-        transform: translate(12px, -56px) scale(1.368);
-      }
-      @media (min-width: 1680px) {
-        transform: translate(12px, -39px) scale(1.456);
-      }
-      @media (min-width: 1920px) {
-        transform: translate(15px, 12px) scale(1.715);
-      }
-      @media (min-width: 2540px) {
-        transform: translate(20px, 147px) scale(2.412);
-      }
-    `};
+    p.$isOnePlayer
+      ? css`
+          @media (min-width: 1280px) {
+            height: 646px;
+            transform: translate(9px, -133px) scale(1.052);
+          }
+          @media (min-width: 1365px) {
+            height: 673px;
+            transform: translate(9px, -126px) scale(1.087);
+          }
+          @media (min-width: 1440px) {
+            transform: translate(10px, -112px) scale(1.166);
+          }
+          @media (min-width: 1600px) {
+            transform: translate(11px, -82px) scale(1.336);
+          }
+          @media (min-width: 1680px) {
+            transform: translate(12px, -67px) scale(1.421);
+          }
+          @media (min-width: 1920px) {
+            transform: translate(15px, -21px) scale(1.677);
+          }
+          @media (min-width: 2540px) {
+            transform: translate(20px, 101px) scale(2.354);
+          }
+        `
+      : css`
+          @media (min-width: 1280px) {
+            height: 616px;
+            transform: translate(9px, -113px) scale(1.08);
+          }
+          @media (min-width: 1365px) {
+            height: 644px;
+            transform: translate(9px, -105px) scale(1.113);
+          }
+          @media (min-width: 1440px) {
+            transform: translate(10px, -89px) scale(1.195);
+          }
+          @media (min-width: 1600px) {
+            transform: translate(12px, -56px) scale(1.368);
+          }
+          @media (min-width: 1680px) {
+            transform: translate(12px, -39px) scale(1.456);
+          }
+          @media (min-width: 1920px) {
+            transform: translate(15px, 12px) scale(1.715);
+          }
+          @media (min-width: 2540px) {
+            transform: translate(20px, 147px) scale(2.412);
+          }
+        `};
 `;
 const Copyright = styled.div`
   position: absolute;
