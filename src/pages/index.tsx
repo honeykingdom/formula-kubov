@@ -44,11 +44,11 @@ const TvPlayer = styled.div`
   background-color: #18181b;
   overflow: hidden;
 `;
-const TvPlayerIframe = styled(Iframe)<{ $isOnePlayer: boolean }>`
+const TvPlayerIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
   width: 990px;
 
   ${(p) =>
-    p.$isOnePlayer
+    p.$isPlaylist
       ? css`
           @media (min-width: 1280px) {
             height: 646px;
@@ -123,7 +123,9 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
 
 const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.GATSBY_HOSTNAME}`;
 const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${process.env.GATSBY_HOSTNAME}`;
-const isOnePlayer = JSON.parse(process.env.GATSBY_TV_PLAYER_IS_ONE || 'false');
+const isPlaylist = JSON.parse(
+  process.env.GATSBY_TV_PLAYER_IS_PLAYLIST || 'false',
+);
 
 const App = () => (
   <AppRoot>
@@ -132,7 +134,7 @@ const App = () => (
     <TvPlayer>
       <TvPlayerIframe
         src={process.env.GATSBY_TV_PLAYER_URL}
-        $isOnePlayer={isOnePlayer}
+        $isPlaylist={isPlaylist}
       />
       <Copyright>
         Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
