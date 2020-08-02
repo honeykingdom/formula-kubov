@@ -27,6 +27,9 @@ jobs:
           restore-keys: |
             nodeModules-
 
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Check is playlist
         uses: actions/github-script@v2
         id: is-playlist
@@ -35,22 +38,26 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const response = await github.request(process.env.GATSBY_TV_PLAYER_URL);
+            const url = process.env.GATSBY_TV_PLAYER_URL;
+            const response = await github.request(url);
             const isPlaylist = response.data.includes('//uma.media/playlist/');
+            console.log(url);
             console.log('isPlaylist =', isPlaylist);
             return isPlaylist;
 
-      - name: Deploy to Netlify
-        uses: jsmrcaga/action-netlify-deploy@master
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_MESSAGE: 'Prod deploy v${{ github.ref }}'
-          NETLIFY_DEPLOY_TO_PROD: true
-          build_directory: './public'
-          install_command: yarn install --frozen-lockfile
-          build_command: yarn build
+      - name: Build
+        run: yarn build
         env:
           GATSBY_HOSTNAME: ${{ secrets.GATSBY_HOSTNAME }}
           GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
           GATSBY_TV_PLAYER_IS_PLAYLIST: ${{ steps.is-playlist.outputs.result }}
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
+        with:
+          publish-dir: './public'
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
