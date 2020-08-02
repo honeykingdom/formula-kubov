@@ -2,6 +2,8 @@ name: Netlify Deploy
 
 on:
   workflow_dispatch:
+    branches:
+      - master
 
 jobs:
   deploy:
