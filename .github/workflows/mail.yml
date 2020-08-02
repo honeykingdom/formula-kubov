@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publishMasterCommit:
+  main:
     name: Publish to Netlify
     runs-on: ubuntu-latest
     steps:
@@ -29,16 +29,38 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Check is playlist
+      - uses: actions/github-script@v2
+        id: is-playlist
         env:
-          CI: true
+          GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
+        with:
+          result-encoding: string
+          script: |
+            const https = require('https');
+
+            const request = (url) =>
+              let body = '';
+              new Promise((resolve, reject) => {
+                https.get(url, (res) => {
+                  res.on('data', (data) => { body += data });
+                  res.on('error', reject);
+                  res.on('end', () => { resolve(body) });
+                });
+              });
+
+            const response = await request(process.env.GATSBY_TV_PLAYER_URL);
+            const isPlaylist = response.includes('//uma.media/playlist/');
+
+            return isPlaylist;
 
       - name: Build
         run: yarn build
         env:
-          CI: true
           GATSBY_HOSTNAME: ${{ secrets.GATSBY_HOSTNAME }}
           GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
-          GATSBY_TV_PLAYER_IS_ONE: ${{ secrets.GATSBY_TV_PLAYER_IS_ONE }}
+          GATSBY_TV_PLAYER_IS_PLAYLIST: ${{ steps.is-playlist.outputs.result }}
 
       - name: Deploy production to Netlify
         uses: South-Paw/action-netlify-deploy@v1.0.4
@@ -47,4 +69,3 @@ jobs:
           netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
           build-dir: './public'
-          comment-on-commit: true
