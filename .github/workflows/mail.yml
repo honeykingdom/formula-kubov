@@ -41,7 +41,6 @@ jobs:
             const url = process.env.GATSBY_TV_PLAYER_URL;
             const response = await github.request(url);
             const isPlaylist = response.data.includes('//uma.media/playlist/');
-            console.log(url);
             console.log('isPlaylist =', isPlaylist);
             return isPlaylist;
 
@@ -56,6 +55,7 @@ jobs:
         uses: nwtgck/actions-netlify@v1.1
         with:
           publish-dir: './public'
+          production-deploy: true
           enable-commit-comment: false
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
