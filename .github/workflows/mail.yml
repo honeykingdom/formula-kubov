@@ -1,14 +1,10 @@
-name: Deploy
+name: Netlify Deploy
 
-on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
-  main:
-    name: Publish to Netlify
+  deploy:
+    name: Deploy to Netlify
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,9 +23,6 @@ jobs:
           restore-keys: |
             nodeModules-
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Check is playlist
         uses: actions/github-script@v2
         id: is-playlist
@@ -43,17 +36,17 @@ jobs:
             console.log('isPlaylist =', isPlaylist);
             return isPlaylist;
 
-      - name: Build
-        run: yarn build
+      - name: Deploy to Netlify
+        uses: jsmrcaga/action-netlify-deploy@master
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_MESSAGE: 'Prod deploy v${{ github.ref }}'
+          NETLIFY_DEPLOY_TO_PROD: true
+          build_directory: './public'
+          install_command: yarn install --frozen-lockfile
+          build_command: yarn build
         env:
           GATSBY_HOSTNAME: ${{ secrets.GATSBY_HOSTNAME }}
           GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
           GATSBY_TV_PLAYER_IS_PLAYLIST: ${{ steps.is-playlist.outputs.result }}
-
-      - name: Deploy production to Netlify
-        uses: South-Paw/action-netlify-deploy@v1.0.4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
-          build-dir: './public'
