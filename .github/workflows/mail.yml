@@ -36,9 +36,9 @@ jobs:
         run: yarn build
         env:
           CI: true
-          GATSBY_HOSTNAME: ${{ secrets.GATSBY_HOSTNAME }}
-          GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
-          GATSBY_TV_PLAYER_IS_ONE: ${{ secrets.GATSBY_TV_PLAYER_IS_ONE }}
+          # GATSBY_HOSTNAME: ${{ secrets.GATSBY_HOSTNAME }}
+          # GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
+          # GATSBY_TV_PLAYER_IS_ONE: ${{ secrets.GATSBY_TV_PLAYER_IS_ONE }}
 
       - name: Deploy production to Netlify
         uses: South-Paw/action-netlify-deploy@v1.0.4
