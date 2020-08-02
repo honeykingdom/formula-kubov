@@ -39,8 +39,9 @@ jobs:
           result-encoding: string
           script: |
             const response = await github.request(process.env.GATSBY_TV_PLAYER_URL);
-            console.log(response);
-            return response.data.includes('//uma.media/playlist/');
+            const isPlaylist = response.data.includes('//uma.media/playlist/');
+            console.log('isPlaylist =', isPlaylist);
+            return isPlaylist;
 
       - name: Build
         run: yarn build
