@@ -51,31 +51,6 @@ const TvPlayerIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
     p.$isPlaylist
       ? css`
           @media (min-width: 1280px) {
-            height: 646px;
-            transform: translate(9px, -133px) scale(1.052);
-          }
-          @media (min-width: 1365px) {
-            height: 673px;
-            transform: translate(9px, -126px) scale(1.087);
-          }
-          @media (min-width: 1440px) {
-            transform: translate(10px, -112px) scale(1.166);
-          }
-          @media (min-width: 1600px) {
-            transform: translate(11px, -82px) scale(1.336);
-          }
-          @media (min-width: 1680px) {
-            transform: translate(12px, -67px) scale(1.421);
-          }
-          @media (min-width: 1920px) {
-            transform: translate(15px, -21px) scale(1.677);
-          }
-          @media (min-width: 2540px) {
-            transform: translate(20px, 101px) scale(2.354);
-          }
-        `
-      : css`
-          @media (min-width: 1280px) {
             height: 616px;
             transform: translate(9px, -113px) scale(1.08);
           }
@@ -97,6 +72,31 @@ const TvPlayerIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
           }
           @media (min-width: 2540px) {
             transform: translate(20px, 147px) scale(2.412);
+          }
+        `
+      : css`
+          @media (min-width: 1280px) {
+            height: 646px;
+            transform: translate(9px, -133px) scale(1.052);
+          }
+          @media (min-width: 1365px) {
+            height: 673px;
+            transform: translate(9px, -126px) scale(1.087);
+          }
+          @media (min-width: 1440px) {
+            transform: translate(10px, -112px) scale(1.166);
+          }
+          @media (min-width: 1600px) {
+            transform: translate(11px, -82px) scale(1.336);
+          }
+          @media (min-width: 1680px) {
+            transform: translate(12px, -67px) scale(1.421);
+          }
+          @media (min-width: 1920px) {
+            transform: translate(15px, -21px) scale(1.677);
+          }
+          @media (min-width: 2540px) {
+            transform: translate(20px, 101px) scale(2.354);
           }
         `};
 `;
