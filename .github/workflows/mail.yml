@@ -50,8 +50,12 @@ jobs:
                 });
               });
 
-            const response = await request(process.env.GATSBY_TV_PLAYER_URL);
-            const isPlaylist = response.includes('//uma.media/playlist/');
+            let isPlaylist = false;
+
+            (async () => {
+              const response = await request(process.env.GATSBY_TV_PLAYER_URL);
+              isPlaylist = response.includes('//uma.media/playlist/');
+            })();
 
             return isPlaylist;
 
