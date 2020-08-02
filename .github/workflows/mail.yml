@@ -31,7 +31,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Check is playlist
-      - uses: actions/github-script@v2
+        uses: actions/github-script@v2
         id: is-playlist
         env:
           GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
