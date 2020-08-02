@@ -38,26 +38,9 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const https = require('https');
-
-            const request = (url) =>
-              let body = '';
-              new Promise((resolve, reject) => {
-                https.get(url, (res) => {
-                  res.on('data', (data) => { body += data });
-                  res.on('error', reject);
-                  res.on('end', () => { resolve(body) });
-                });
-              });
-
-            let isPlaylist = false;
-
-            (async () => {
-              const response = await request(process.env.GATSBY_TV_PLAYER_URL);
-              isPlaylist = response.includes('//uma.media/playlist/');
-            })();
-
-            return isPlaylist;
+            const response = await github.request(process.env.GATSBY_TV_PLAYER_URL);
+            console.log(response);
+            return response.data.includes('//uma.media/playlist/');
 
       - name: Build
         run: yarn build
