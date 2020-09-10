@@ -2,8 +2,14 @@
   "name": "formula-kubov",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export"
+  },
   "dependencies": {
-    "gatsby": "^2.23.12",
+    "next": "9.5.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1"
@@ -14,10 +20,10 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/styled-components": "^5.1.1",
-    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
     "babel-plugin-styled-components": "^1.11.1",
     "eslint": "^7.4.0",
-    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-config-airbnb-typescript": "^10.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
@@ -25,15 +31,7 @@
     "eslint-plugin-react": "^7.20.3",
     "gatsby-plugin-styled-components": "^3.3.10",
     "prettier": "^2.0.5",
-    "typescript": "^3.9.7"
-  },
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "start": "yarn develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "typescript": "^4.0.2"
   },
   "eslintConfig": {
     "env": {
