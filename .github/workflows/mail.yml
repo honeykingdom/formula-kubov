@@ -34,11 +34,11 @@ jobs:
         uses: actions/github-script@v2
         id: is-playlist
         env:
-          GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
+          NEXT_PUBLIC_TV_PLAYER_URL: ${{ secrets.NEXT_PUBLIC_TV_PLAYER_URL }}
         with:
           result-encoding: string
           script: |
-            const url = process.env.GATSBY_TV_PLAYER_URL;
+            const url = process.env.NEXT_PUBLIC_TV_PLAYER_URL;
             const response = await github.request(url);
             const isPlaylist = response.data.includes('//uma.media/playlist/');
             console.log('isPlaylist =', isPlaylist);
@@ -47,9 +47,9 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          GATSBY_HOSTNAME: ${{ secrets.GATSBY_HOSTNAME }}
-          GATSBY_TV_PLAYER_URL: ${{ secrets.GATSBY_TV_PLAYER_URL }}
-          GATSBY_TV_PLAYER_IS_PLAYLIST: ${{ steps.is-playlist.outputs.result }}
+          NEXT_PUBLIC_HOSTNAME: ${{ secrets.NEXT_PUBLIC_HOSTNAME }}
+          NEXT_PUBLIC_TV_PLAYER_URL: ${{ secrets.NEXT_PUBLIC_TV_PLAYER_URL }}
+          NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST: ${{ steps.is-playlist.outputs.result }}
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1
