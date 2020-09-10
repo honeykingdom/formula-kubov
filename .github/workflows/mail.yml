@@ -45,7 +45,7 @@ jobs:
             return isPlaylist;
 
       - name: Build
-        run: yarn build
+        run: yarn build && yarn export
         env:
           NEXT_PUBLIC_HOSTNAME: ${{ secrets.NEXT_PUBLIC_HOSTNAME }}
           NEXT_PUBLIC_TV_PLAYER_URL: ${{ secrets.NEXT_PUBLIC_TV_PLAYER_URL }}
@@ -54,7 +54,7 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1
         with:
-          publish-dir: './public'
+          publish-dir: './out'
           production-deploy: true
           enable-commit-comment: false
         env:
