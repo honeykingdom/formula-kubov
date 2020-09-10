@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Head from 'next/head';
 import styled, { css, createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -31,9 +32,34 @@ const Player = styled(Iframe).attrs({
   grid-area: player;
   z-index: 1;
 `;
-const Chat = styled(Iframe)`
+const Chats = styled.div`
   grid-area: chat;
+`;
+const ChatTabs = styled.div`
+  display: flex;
+  flex-grow: 1;
+`;
+const ChatTab = styled.div<{ $active: boolean }>`
+  flex-grow: 1;
+  flex-basis: 0;
+  color: ${(p) => (p.$active ? '#d3d3d3' : '#898395')};
+  background-color: ${(p) => (p.$active ? '#1f1925' : '#0e0c13')};
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+  text-align: center;
+  border-right: 1px solid #2c2541;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #1f1925;
+  }
+`;
+const Chat = styled(Iframe)<{ $active: boolean }>`
+  display: ${(p) => (p.$active ? 'block' : 'none')};
   background-color: gray;
+  height: calc(100% - 20px);
   z-index: 1;
 `;
 const TvPlayer = styled.div`
@@ -121,29 +147,75 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
   }
 `;
 
-const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.GATSBY_HOSTNAME}`;
-const chatUrl = `//www.twitch.tv/embed/melharucos/chat?darkpopout&parent=${process.env.GATSBY_HOSTNAME}`;
+const getChatUrl = (channel: string) =>
+  `//www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
+
+const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
+const chats = ['melharucos', 'lasqa'];
 const isPlaylist = JSON.parse(
-  process.env.GATSBY_TV_PLAYER_IS_PLAYLIST || 'false',
+  process.env.NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST || 'false',
 );
 
-const App = () => (
-  <AppRoot>
-    <Player src={playerUrl} />
-    <Chat src={chatUrl} />
-    <TvPlayer>
-      <TvPlayerIframe
-        src={process.env.GATSBY_TV_PLAYER_URL}
-        $isPlaylist={isPlaylist}
-      />
-      <Copyright>
-        Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
-        Repository:{' '}
-        <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
-      </Copyright>
-    </TvPlayer>
-    <GlobalStyle />
-  </AppRoot>
+const head = (
+  <Head>
+    <meta charSet="utf-8" />
+    <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="Formula Kubov" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
+
+    <title>Formula Kubov</title>
+  </Head>
 );
+
+const App = () => {
+  const [activeChat, setActiveChat] = useState(chats[0]);
+
+  return (
+    <AppRoot>
+      {head}
+      <Player src={playerUrl} />
+      <Chats>
+        <ChatTabs>
+          {chats.map((chat) => (
+            <ChatTab
+              key={chat}
+              $active={chat === activeChat}
+              onClick={() => setActiveChat(chat)}
+            >
+              {chat}
+            </ChatTab>
+          ))}
+        </ChatTabs>
+        {chats.map((chat) => (
+          <Chat
+            key={chat}
+            src={getChatUrl(chat)}
+            $active={chat === activeChat}
+          />
+        ))}
+      </Chats>
+      <TvPlayer>
+        <TvPlayerIframe
+          src={process.env.NEXT_PUBLIC_TV_PLAYER_URL}
+          $isPlaylist={isPlaylist}
+        />
+        <Copyright>
+          Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link>{' '}
+          - Repository:{' '}
+          <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
+        </Copyright>
+      </TvPlayer>
+      <GlobalStyle />
+    </AppRoot>
+  );
+};
 
 export default App;
