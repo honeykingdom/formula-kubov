@@ -69,6 +69,23 @@ const Chat = styled(Iframe)<{ $active: boolean }>`
   height: calc(100% - 20px);
   z-index: 1;
 `;
+const Tooltip = styled.div`
+  position: absolute;
+  top: 21px;
+  left: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  padding: 12px 24px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #18181b;
+`;
+const TooltipCloseButton = styled.button`
+  margin-left: 16px;
+  cursor: pointer;
+`;
 const TvPlayer = styled.div`
   grid-area: tv-player;
   position: relative;
@@ -181,6 +198,7 @@ const head = (
 
 const App = () => {
   const [activeChat, setActiveChat] = useState(chats[0]);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(isPlaylist);
 
   return (
     <AppRoot>
@@ -205,6 +223,14 @@ const App = () => {
             $active={chat === activeChat}
           />
         ))}
+        {isTooltipVisible && (
+          <Tooltip>
+            CUM4 под плеером
+            <TooltipCloseButton onClick={() => setIsTooltipVisible(false)}>
+              ОК
+            </TooltipCloseButton>
+          </Tooltip>
+        )}
       </Chats>
       <TvPlayer>
         <TvPlayerIframe
