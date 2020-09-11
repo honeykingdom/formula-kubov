@@ -8,17 +8,20 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     margin: 0;
+    font-family: sans-serif;
+    background-color: #18181b;
   }
 `;
 const AppRoot = styled.div`
   display: grid;
   height: 100vh;
   width: 100vw;
-  grid-template-rows: 192px auto;
+  grid-template-rows: 192px auto 48px;
   grid-template-columns: auto 340px;
   grid-template-areas:
     'tv-player player'
-    'tv-player chat';
+    'tv-player chat'
+    'copyright chat';
 `;
 const Iframe = styled.iframe`
   border: none;
@@ -34,23 +37,27 @@ const Player = styled(Iframe).attrs({
 `;
 const Chats = styled.div`
   grid-area: chat;
+  position: relative;
 `;
 const ChatTabs = styled.div`
   display: flex;
   flex-grow: 1;
+  border-bottom: 1px solid #303032;
 `;
 const ChatTab = styled.div<{ $active: boolean }>`
   flex-grow: 1;
   flex-basis: 0;
   color: ${(p) => (p.$active ? '#d3d3d3' : '#898395')};
   background-color: ${(p) => (p.$active ? '#1f1925' : '#0e0c13')};
-  font-family: sans-serif;
   font-size: 12px;
   font-weight: bold;
-  line-height: 20px;
+  line-height: 19px;
   text-align: center;
-  border-right: 1px solid #2c2541;
   cursor: pointer;
+
+  &:not(:last-child) {
+    border-right: 1px solid #303032;
+  }
 
   &:hover {
     background-color: #1f1925;
@@ -63,11 +70,10 @@ const Chat = styled(Iframe)<{ $active: boolean }>`
   z-index: 1;
 `;
 const TvPlayer = styled.div`
+  grid-area: tv-player;
   position: relative;
   display: flex;
   justify-content: center;
-  grid-area: tv-player;
-  background-color: #18181b;
   overflow: hidden;
 `;
 const TvPlayerIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
@@ -127,15 +133,13 @@ const TvPlayerIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
         `};
 `;
 const Copyright = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px 0;
+  grid-area: copyright;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   font-family: sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: center;
+  border-top: 1px solid #303032;
   opacity: 0.6;
 `;
 const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
@@ -207,12 +211,15 @@ const App = () => {
           src={process.env.NEXT_PUBLIC_TV_PLAYER_URL}
           $isPlaylist={isPlaylist}
         />
-        <Copyright>
-          Author: <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link>{' '}
-          - Repository:{' '}
-          <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
-        </Copyright>
       </TvPlayer>
+      <Copyright>
+        <span>
+          Author:&nbsp;
+          <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
+          Repository:&nbsp;
+          <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
+        </span>
+      </Copyright>
       <GlobalStyle />
     </AppRoot>
   );
