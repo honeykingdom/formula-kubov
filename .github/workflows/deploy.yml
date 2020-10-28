@@ -14,21 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Node 12
+      - name: Use Node 14
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
 
-      - name: Use cached node_modules
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            nodeModules-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Install dependencies (with cache)
+        uses: bahmutov/npm-install@v1
 
       - name: Check is playlist
         uses: actions/github-script@v2
