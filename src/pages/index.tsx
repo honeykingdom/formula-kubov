@@ -240,6 +240,7 @@ const App = () => {
       </TvPlayer>
       <Copyright>
         <span>
+          CUM 4 ПОД ПЛЕЕРОМ! СКРОЛЛ КОЛЁСИКОМ МЫШИ! 
           Author:&nbsp;
           <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
           Repository:&nbsp;
