@@ -224,7 +224,7 @@ const App = () => {
         ))}
         {isTooltipVisible && (
           <Tooltip>
-            CUM 4 под плеером!<br>Скролл колёсиком мыши!
+            CUM 4 под плеером!<br />Скролл колёсиком мыши!
             <TooltipCloseButton onClick={() => setIsTooltipVisible(false)}>
               ОК
             </TooltipCloseButton>
