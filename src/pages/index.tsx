@@ -72,12 +72,11 @@ const Chat = styled(Iframe)<{ $active: boolean }>`
 const Tooltip = styled.div`
   position: absolute;
   top: 21px;
-  left: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2;
-  padding: 12px 24px;
+  padding: 3px 20px;
   font-size: 18px;
   color: #fff;
   background-color: #18181b;
@@ -225,7 +224,7 @@ const App = () => {
         ))}
         {isTooltipVisible && (
           <Tooltip>
-            CUM4 под плеером
+            CUM 4 под плеером!<br>Скролл колёсиком мыши!
             <TooltipCloseButton onClick={() => setIsTooltipVisible(false)}>
               ОК
             </TooltipCloseButton>
@@ -240,7 +239,6 @@ const App = () => {
       </TvPlayer>
       <Copyright>
         <span>
-          CUM 4 ПОД ПЛЕЕРОМ! СКРОЛЛ КОЛЁСИКОМ МЫШИ! 
           Author:&nbsp;
           <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
           Repository:&nbsp;
