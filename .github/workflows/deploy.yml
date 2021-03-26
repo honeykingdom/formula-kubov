@@ -39,6 +39,7 @@ jobs:
       - name: Build
         run: yarn build && yarn export
         env:
+          NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.NEXT_PUBLIC_GA_TRACKING_ID }}
           NEXT_PUBLIC_HOSTNAME: ${{ secrets.NEXT_PUBLIC_HOSTNAME }}
           NEXT_PUBLIC_TV_PLAYER_URL: ${{ secrets.NEXT_PUBLIC_TV_PLAYER_URL }}
           NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST: ${{ steps.is-playlist.outputs.result }}
