@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import Head from 'next/head';
+import React, { useState } from 'react';
 import styled, { css, createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -175,32 +175,15 @@ const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.N
 const chats = ['melharucos', 'lasqa'];
 const isPlaylist = process.env.NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST === 'true';
 
-const head = (
-  <Head>
-    <meta charSet="utf-8" />
-    <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="Formula Kubov" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#000000" />
-
-    <title>Formula Kubov</title>
-  </Head>
-);
-
 const App = () => {
   const [activeChat, setActiveChat] = useState(chats[0]);
   const [isTooltipVisible, setIsTooltipVisible] = useState(isPlaylist);
 
   return (
     <AppRoot>
-      {head}
+      <Head>
+        <title>Formula Kubov</title>
+      </Head>
       <Player src={playerUrl} />
       <Chats>
         <ChatTabs>
