@@ -173,9 +173,7 @@ const getChatUrl = (channel: string) =>
 
 const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
 const chats = ['melharucos', 'lasqa'];
-const isPlaylist = JSON.parse(
-  process.env.NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST || 'false',
-);
+const isPlaylist = process.env.NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST === 'true';
 
 const head = (
   <Head>
