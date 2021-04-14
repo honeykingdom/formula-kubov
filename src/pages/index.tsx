@@ -170,8 +170,8 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
 const getChatUrl = (channel: string) =>
   `//www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
 
-const playerUrl = `//player.twitch.tv/?channel=melharucos&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
-const chats = ['melharucos', 'lasqa'];
+const playerUrl = `//player.twitch.tv/?channel=lasqa&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
+const chats = ['lasqa', 'melharucos'];
 const isPlaylist = process.env.NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST === 'true';
 
 const App = () => {
