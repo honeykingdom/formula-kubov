@@ -170,8 +170,8 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
 const getChatUrl = (channel: string) =>
   `//www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
 
-const playerUrl = `//player.twitch.tv/?channel=lasqa&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
-const chats = ['lasqa', 'melharucos'];
+const playerUrl = `//player.twitch.tv/?channel=${process.env.NEXT_PUBLIC_TWITCH_PLAYER}&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
+const chats = process.env.NEXT_PUBLIC_TWITCH_CHATS.split(';');
 const isPlaylist = process.env.NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST === 'true';
 
 const App = () => {
@@ -205,7 +205,9 @@ const App = () => {
         ))}
         {isTooltipVisible && (
           <Tooltip>
-            CUM 4 под плеером!<br />Скролл колёсиком мыши!
+            CUM 4 под плеером!
+            <br />
+            Скролл колёсиком мыши!
             <TooltipCloseButton onClick={() => setIsTooltipVisible(false)}>
               ОК
             </TooltipCloseButton>
