@@ -22,37 +22,15 @@ jobs:
       - name: Install dependencies (with cache)
         uses: bahmutov/npm-install@v1
 
-      - name: Check is playlist
-        uses: actions/github-script@v2
-        id: is-playlist
-        env:
-          NEXT_PUBLIC_TV_PLAYER_URL: ${{ secrets.NEXT_PUBLIC_TV_PLAYER_URL }}
-        with:
-          result-encoding: string
-          script: |
-            const url = process.env.NEXT_PUBLIC_TV_PLAYER_URL;
-            const response = await github.request(url);
-            const isPlaylist = response.data.includes('//uma.media/playlist/');
-            console.log('isPlaylist =', isPlaylist);
-            return isPlaylist;
-
       - name: Build
-        run: yarn build && yarn export
+        run: yarn build
         env:
           NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.NEXT_PUBLIC_GA_TRACKING_ID }}
-          NEXT_PUBLIC_HOSTNAME: ${{ secrets.NEXT_PUBLIC_HOSTNAME }}
-          NEXT_PUBLIC_TV_PLAYER_URL: ${{ secrets.NEXT_PUBLIC_TV_PLAYER_URL }}
-          NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST: ${{ steps.is-playlist.outputs.result }}
-          NEXT_PUBLIC_TWITCH_PLAYER: ${{ secrets.NEXT_PUBLIC_TWITCH_PLAYER }}
-          NEXT_PUBLIC_TWITCH_CHATS: ${{ secrets.NEXT_PUBLIC_TWITCH_CHATS }}
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.1
+        uses: netlify/actions/cli@master
         with:
-          publish-dir: './out'
-          production-deploy: true
-          enable-commit-comment: false
+          args: deploy --prod
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
