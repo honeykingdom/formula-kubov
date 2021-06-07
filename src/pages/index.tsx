@@ -3,9 +3,8 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { css, Global } from '@emotion/react';
-import type { Options, OptionsRow } from 'types';
-import parseOptions from 'utils/parseOptions';
-import supabase from 'utils/supabase';
+import type { Options } from 'types';
+import getOptions from 'utils/getOptions';
 
 const globalStyles = css`
   * {
@@ -268,9 +267,9 @@ const Home = ({
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const response = await supabase.from<OptionsRow>('fk_options').select('*');
+  const props = await getOptions();
 
-  return { props: parseOptions(response), revalidate: 1 };
+  return { props, revalidate: 1 };
 };
 
 export default Home;

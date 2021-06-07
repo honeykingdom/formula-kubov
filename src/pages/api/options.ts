@@ -1,30 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'next-auth/jwt';
 import fetch from 'node-fetch';
-import type {
-  GetOptionsResponse,
-  OptionsRow,
-  RolesRow,
-  UpdateOptionsDto,
-  User,
-} from 'types';
+import type { GetOptionsResponse, UpdateOptionsDto, User } from 'types';
 import supabase from 'utils/supabase';
-import parseOptions from 'utils/parseOptions';
-import parseRoles from 'utils/parseRoles';
+import getOptions from 'utils/getOptions';
+import getRoles from 'utils/getRoles';
 
 // https://regexr.com/3dj5t
 const YOUTUBE_VIDEO_REGEX = /^((?:https?:)?\/\/)?((?:www|m)\.)?(?:youtube\.com|youtu.be)(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/;
 
 const secret = process.env.JWT_SECRET;
-
-const getOptionsAndRoles = async () => {
-  const [optionsResponse, rolesResponse] = await Promise.all([
-    supabase.from<OptionsRow>('fk_options').select('*'),
-    supabase.from<RolesRow>('fk_roles').select('*'),
-  ]);
-
-  return [parseOptions(optionsResponse), parseRoles(rolesResponse)] as const;
-};
 
 const isSportBoxPlaylist = async (url: string) => {
   const response = await fetch(url);
@@ -43,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.end();
   }
 
-  const [options, roles] = await getOptionsAndRoles();
+  const [options, roles] = await Promise.all([getOptions(), getRoles()]);
 
   if (roles[user.sub] !== 'admin' && roles[user.sub] !== 'moderator') {
     res.status(401);
