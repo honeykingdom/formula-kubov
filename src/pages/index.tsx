@@ -1,6 +1,5 @@
-import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { css, Global } from '@emotion/react';
 import type { Options } from 'types';
@@ -176,48 +175,64 @@ const getTwitchChatUrl = (channel: string, hostname: string) =>
 const getTwitchPlayerUrl = (channel: string, hostname: string) =>
   `//player.twitch.tv/?channel=${channel}&parent=${hostname}`;
 
-type Props = Options;
+const Home = () => {
+  const [options, setOptions] = useState<Options>(null);
 
-const Home = ({
-  hostname,
-  tvPlayerUrl,
-  tvPlayerType = 'sportbox',
-  tvPlayerIsPlaylist,
-  twitchPlayer,
-  twitchChats,
-}: Props) => {
-  const [activeChat, setActiveChat] = useState(twitchChats[0]);
-  const [isTooltipVisible, setIsTooltipVisible] = useState(tvPlayerIsPlaylist);
+  const {
+    hostname,
+    tvPlayerUrl,
+    tvPlayerType,
+    tvPlayerIsPlaylist,
+    twitchPlayer,
+    twitchChats,
+  } = options || {};
+
+  const [activeChat, setActiveChat] = useState('');
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const options = await getOptions();
+
+      setOptions(options);
+      setActiveChat(options.twitchChats[0]);
+      setIsTooltipVisible(options.tvPlayerIsPlaylist);
+    })();
+  }, []);
 
   return (
     <HomeRoot>
       <Head>
         <title>Formula Kubov</title>
       </Head>
-      <Player
-        allow="autoplay"
-        allowFullScreen
-        src={getTwitchPlayerUrl(twitchPlayer, hostname)}
-      />
+      {options && (
+        <Player
+          allow="autoplay"
+          allowFullScreen
+          src={getTwitchPlayerUrl(twitchPlayer, hostname)}
+        />
+      )}
       <Chats>
         <ChatTabs>
-          {twitchChats.map((chat) => (
-            <ChatTab
-              key={chat}
-              $active={chat === activeChat}
-              onClick={() => setActiveChat(chat)}
-            >
-              {chat}
-            </ChatTab>
-          ))}
+          {options &&
+            twitchChats.map((chat) => (
+              <ChatTab
+                key={chat}
+                $active={chat === activeChat}
+                onClick={() => setActiveChat(chat)}
+              >
+                {chat}
+              </ChatTab>
+            ))}
         </ChatTabs>
-        {twitchChats.map((chat) => (
-          <Chat
-            key={chat}
-            src={getTwitchChatUrl(chat, hostname)}
-            $active={chat === activeChat}
-          />
-        ))}
+        {options &&
+          twitchChats.map((chat) => (
+            <Chat
+              key={chat}
+              src={getTwitchChatUrl(chat, hostname)}
+              $active={chat === activeChat}
+            />
+          ))}
         {isTooltipVisible && (
           <Tooltip>
             CUM 4 под плеером!
@@ -264,12 +279,6 @@ const Home = ({
       <Global styles={globalStyles} />
     </HomeRoot>
   );
-};
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const props = await getOptions();
-
-  return { props, revalidate: 1 };
 };
 
 export default Home;
