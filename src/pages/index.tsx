@@ -1,8 +1,13 @@
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import React, { useState } from 'react';
-import styled, { css, createGlobalStyle } from 'styled-components';
+import styled from '@emotion/styled';
+import { css, Global } from '@emotion/react';
+import type { Options, OptionsRow } from 'types';
+import parseOptions from 'utils/parseOptions';
+import supabase from 'utils/supabase';
 
-const GlobalStyle = createGlobalStyle`
+const globalStyles = css`
   * {
     box-sizing: border-box;
   }
@@ -12,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #18181b;
   }
 `;
-const AppRoot = styled.div`
+const HomeRoot = styled.div`
   display: grid;
   height: 100vh;
   width: 100vw;
@@ -28,10 +33,7 @@ const Iframe = styled.iframe`
   width: 100%;
   height: 100%;
 `;
-const Player = styled(Iframe).attrs({
-  allow: 'autoplay',
-  allowFullScreen: true,
-})`
+const Player = styled(Iframe)`
   grid-area: player;
   z-index: 1;
 `;
@@ -92,7 +94,8 @@ const TvPlayer = styled.div`
   justify-content: center;
   overflow: hidden;
 `;
-const TvPlayerIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
+const TvPlayerIframe = Iframe;
+const TvPlayerSportBoxIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
   width: 990px;
 
   ${(p) =>
@@ -148,6 +151,7 @@ const TvPlayerIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
           }
         `};
 `;
+const TvPlayerMatchTvIframe = styled(Iframe)``;
 const Copyright = styled.div`
   grid-area: copyright;
   display: flex;
@@ -158,7 +162,7 @@ const Copyright = styled.div`
   border-top: 1px solid #303032;
   opacity: 0.6;
 `;
-const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
+const Link = styled.a`
   text-decoration: none;
   color: #64b5f6;
 
@@ -167,26 +171,38 @@ const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer noopener' })`
   }
 `;
 
-const getChatUrl = (channel: string) =>
-  `//www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
+const getTwitchChatUrl = (channel: string, hostname: string) =>
+  `//www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${hostname}`;
 
-const playerUrl = `//player.twitch.tv/?channel=${process.env.NEXT_PUBLIC_TWITCH_PLAYER}&parent=${process.env.NEXT_PUBLIC_HOSTNAME}`;
-const chats = process.env.NEXT_PUBLIC_TWITCH_CHATS.split(';');
-const isPlaylist = process.env.NEXT_PUBLIC_TV_PLAYER_IS_PLAYLIST === 'true';
+const getTwitchPlayerUrl = (channel: string, hostname: string) =>
+  `//player.twitch.tv/?channel=${channel}&parent=${hostname}`;
 
-const App = () => {
-  const [activeChat, setActiveChat] = useState(chats[0]);
-  const [isTooltipVisible, setIsTooltipVisible] = useState(isPlaylist);
+type Props = Options;
+
+const Home = ({
+  hostname,
+  tvPlayerUrl,
+  tvPlayerType = 'sportbox',
+  tvPlayerIsPlaylist,
+  twitchPlayer,
+  twitchChats,
+}: Props) => {
+  const [activeChat, setActiveChat] = useState(twitchChats[0]);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(tvPlayerIsPlaylist);
 
   return (
-    <AppRoot>
+    <HomeRoot>
       <Head>
         <title>Formula Kubov</title>
       </Head>
-      <Player src={playerUrl} />
+      <Player
+        allow="autoplay"
+        allowFullScreen
+        src={getTwitchPlayerUrl(twitchPlayer, hostname)}
+      />
       <Chats>
         <ChatTabs>
-          {chats.map((chat) => (
+          {twitchChats.map((chat) => (
             <ChatTab
               key={chat}
               $active={chat === activeChat}
@@ -196,10 +212,10 @@ const App = () => {
             </ChatTab>
           ))}
         </ChatTabs>
-        {chats.map((chat) => (
+        {twitchChats.map((chat) => (
           <Chat
             key={chat}
-            src={getChatUrl(chat)}
+            src={getTwitchChatUrl(chat, hostname)}
             $active={chat === activeChat}
           />
         ))}
@@ -215,22 +231,46 @@ const App = () => {
         )}
       </Chats>
       <TvPlayer>
-        <TvPlayerIframe
-          src={process.env.NEXT_PUBLIC_TV_PLAYER_URL}
-          $isPlaylist={isPlaylist}
-        />
+        {tvPlayerType === 'embed' && <TvPlayerIframe src={tvPlayerUrl} />}
+        {tvPlayerType === 'sportbox' && (
+          <TvPlayerSportBoxIframe
+            src={tvPlayerUrl}
+            $isPlaylist={tvPlayerIsPlaylist}
+          />
+        )}
+        {tvPlayerType === 'match.tv' && (
+          <TvPlayerMatchTvIframe src={tvPlayerUrl} />
+        )}
       </TvPlayer>
       <Copyright>
         <span>
           Author:&nbsp;
-          <Link href="//github.com/DmitryScaletta">DmitryScaletta</Link> -
-          Repository:&nbsp;
-          <Link href="//github.com/honeykingdom/formula-kubov">GitHub</Link>
+          <Link
+            target="_blank"
+            rel="noreferrer noopener"
+            href="//github.com/DmitryScaletta"
+          >
+            DmitryScaletta
+          </Link>{' '}
+          - Repository:&nbsp;
+          <Link
+            target="_blank"
+            rel="noreferrer noopener"
+            href="//github.com/honeykingdom/formula-kubov"
+          >
+            GitHub
+          </Link>
         </span>
       </Copyright>
-      <GlobalStyle />
-    </AppRoot>
+      <Global styles={globalStyles} />
+    </HomeRoot>
   );
 };
 
-export default App;
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const response = await supabase.from<OptionsRow>('fk_options').select('*');
+
+  return { props: parseOptions(response), revalidate: 1 };
+};
+
+export default Home;
