@@ -9,14 +9,22 @@
     "export": "next export"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.3",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@supabase/supabase-js": "^1.13.1",
+    "framer-motion": "^4.1.17",
     "next": "^10.2.0",
+    "next-auth": "^3.25.0",
+    "node-fetch": "^2.6.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "styled-components": "^5.2.3"
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^3.4.2",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.1",
+    "@types/node-fetch": "^2.5.10",
     "@types/react": "^17.0.4",
     "@types/react-dom": "^17.0.3",
     "@types/styled-components": "^5.1.1",
