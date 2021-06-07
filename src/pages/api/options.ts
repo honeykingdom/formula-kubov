@@ -1,10 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'next-auth/jwt';
 import fetch from 'node-fetch';
-import type { GetOptionsResponse, UpdateOptionsDto, User } from 'types';
-import supabase from 'utils/supabase';
+import type {
+  GetOptionsResponse,
+  OptionsRow,
+  UpdateOptionsDto,
+  User,
+} from 'types';
 import getOptions from 'utils/getOptions';
 import getRoles from 'utils/getRoles';
+import updateOptions from 'utils/updateOptions';
 
 // https://regexr.com/3dj5t
 const YOUTUBE_VIDEO_REGEX = /^((?:https?:)?\/\/)?((?:www|m)\.)?(?:youtube\.com|youtu.be)(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/;
@@ -49,7 +54,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       twitchChats,
     }: UpdateOptionsDto = req.body;
 
-    const newOptions: { name: string; value: string }[] = [];
+    const newOptions: OptionsRow[] = [];
 
     if (tvPlayerUrl) {
       if (tvPlayerUrl.startsWith('https://news.sportbox.ru')) {
@@ -83,7 +88,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       newOptions.push({ name: 'twitchChats', value: twitchChats.join(';') });
     }
 
-    await supabase.from('fk_options').upsert(newOptions);
+    await updateOptions(newOptions);
 
     return res.end();
   }
