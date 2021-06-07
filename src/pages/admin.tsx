@@ -11,9 +11,6 @@ import {
   FormHelperText,
   Flex,
   useToast,
-  Alert,
-  AlertIcon,
-  Divider,
   extendTheme,
   ColorModeScript,
 } from '@chakra-ui/react';
@@ -185,13 +182,6 @@ const Admin = () => {
               <FormHelperText>Ссылка на sportbox или youtube</FormHelperText>
             </FormControl>
           </Box>
-
-          <Divider mb={4} />
-
-          <Alert status="info">
-            <AlertIcon />
-            Изменения отобразятся на сайте примерно через одну минуту
-          </Alert>
         </Box>
       )}
     </Box>
