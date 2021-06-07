@@ -26,6 +26,8 @@ jobs:
         run: yarn build
         env:
           NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.NEXT_PUBLIC_GA_TRACKING_ID }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
 
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
