@@ -153,27 +153,27 @@ const TvPlayerMatchTvIframe = styled(Iframe)`
   width: 990px;
 
   @media (min-width: 1280px) {
-    height: 800px;
-    transform: translate(9px, -303px) scale(1.08);
+    height: 704px;
+    transform: translate(9px, -199px) scale(1.06);
   }
   @media (min-width: 1365px) {
-    height: 828px;
-    transform: translate(9px, -299px) scale(1.113);
+    height: 733px;
+    transform: translate(9px, -190px) scale(1.096);
   }
   @media (min-width: 1440px) {
-    transform: translate(9px, -290px) scale(1.195);
+    transform: translate(9px, -178px) scale(1.178);
   }
   @media (min-width: 1600px) {
-    transform: translate(12px, -272px) scale(1.368);
+    transform: translate(9px, -151px) scale(1.352);
   }
   @media (min-width: 1680px) {
-    transform: translate(12px, -262px) scale(1.456);
+    transform: translate(12px, -138px) scale(1.432);
   }
   @media (min-width: 1920px) {
-    transform: translate(15px, -236px) scale(1.715);
+    transform: translate(15px, -97px) scale(1.688);
   }
   @media (min-width: 2540px) {
-    transform: translate(20px, -165px) scale(2.412);
+    transform: translate(20px, 11px) scale(2.377);
   }
 `;
 const Copyright = styled.div`
