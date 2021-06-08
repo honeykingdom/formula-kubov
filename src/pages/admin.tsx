@@ -179,7 +179,9 @@ const Admin = () => {
                 />
                 <Button onClick={onTvPlayerClick}>Сохранить</Button>
               </Flex>
-              <FormHelperText>Ссылка на sportbox или youtube</FormHelperText>
+              <FormHelperText>
+                Ссылка на sportbox, matchtv или youtube
+              </FormHelperText>
             </FormControl>
           </Box>
         </Box>
