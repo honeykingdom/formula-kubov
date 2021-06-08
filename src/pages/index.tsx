@@ -149,7 +149,33 @@ const TvPlayerSportBoxIframe = styled(Iframe)<{ $isPlaylist: boolean }>`
           }
         `};
 `;
-const TvPlayerMatchTvIframe = styled(Iframe)``;
+const TvPlayerMatchTvIframe = styled(Iframe)`
+  width: 990px;
+
+  @media (min-width: 1280px) {
+    height: 800px;
+    transform: translate(9px, -303px) scale(1.08);
+  }
+  @media (min-width: 1365px) {
+    height: 828px;
+    transform: translate(9px, -299px) scale(1.113);
+  }
+  @media (min-width: 1440px) {
+    transform: translate(9px, -290px) scale(1.195);
+  }
+  @media (min-width: 1600px) {
+    transform: translate(12px, -272px) scale(1.368);
+  }
+  @media (min-width: 1680px) {
+    transform: translate(12px, -262px) scale(1.456);
+  }
+  @media (min-width: 1920px) {
+    transform: translate(15px, -236px) scale(1.715);
+  }
+  @media (min-width: 2540px) {
+    transform: translate(20px, -165px) scale(2.412);
+  }
+`;
 const Copyright = styled.div`
   grid-area: copyright;
   display: flex;
@@ -252,7 +278,7 @@ const Home = () => {
             $isPlaylist={tvPlayerIsPlaylist}
           />
         )}
-        {tvPlayerType === 'match.tv' && (
+        {tvPlayerType === 'matchtv' && (
           <TvPlayerMatchTvIframe src={tvPlayerUrl} />
         )}
       </TvPlayer>

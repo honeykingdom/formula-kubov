@@ -10,7 +10,7 @@ export type User = {
 export type Options = {
   hostname: string;
   tvPlayerUrl: string;
-  tvPlayerType: 'embed' | 'sportbox' | 'match.tv';
+  tvPlayerType: 'embed' | 'sportbox' | 'matchtv';
   tvPlayerIsPlaylist: boolean;
   twitchPlayer: string;
   twitchChats: string[];
