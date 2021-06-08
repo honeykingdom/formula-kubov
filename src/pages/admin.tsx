@@ -171,6 +171,20 @@ const Admin = () => {
           <Box as="p" mb={4}>
             <FormControl>
               <FormLabel>TV плеер</FormLabel>
+              <ButtonGroup size="sm" mb={2} isAttached variant="outline">
+                <Button
+                  onClick={() => setTvPlayerInput('https://matchtv.ru/on-air')}
+                >
+                  МатчТВ
+                </Button>
+                <Button
+                  onClick={() =>
+                    setTvPlayerInput('https://static-hbb.1tv.ru/media/stream')
+                  }
+                >
+                  Первый канал
+                </Button>
+              </ButtonGroup>
               <Flex>
                 <Input
                   mr={2}
