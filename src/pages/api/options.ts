@@ -65,6 +65,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           { name: 'tvPlayerType', value: 'sportbox' },
           { name: 'tvPlayerIsPlaylist', value: `${isPlaylist}` },
         );
+      } else if (tvPlayerUrl === 'https://matchtv.ru/on-air') {
+        newOptions.push(
+          { name: 'tvPlayerUrl', value: tvPlayerUrl },
+          { name: 'tvPlayerType', value: 'matchtv' },
+        );
       } else {
         const m = YOUTUBE_VIDEO_REGEX.exec(tvPlayerUrl);
 
