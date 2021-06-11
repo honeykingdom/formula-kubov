@@ -163,7 +163,7 @@ const Admin = () => {
                 <Button onClick={onTwitchChatsClick}>Сохранить</Button>
               </Flex>
               <FormHelperText>
-                Разделять через точку с запятой - ";"
+                Разделять через точку с запятой ";"
               </FormHelperText>
             </FormControl>
           </Box>
@@ -184,6 +184,13 @@ const Admin = () => {
                 >
                   Первый канал
                 </Button>
+                <Button
+                  onClick={() =>
+                    setTvPlayerInput('https://more.tv/online/russia1_hd')
+                  }
+                >
+                  Россия 1
+                </Button>
               </ButtonGroup>
               <Flex>
                 <Input
@@ -194,7 +201,7 @@ const Admin = () => {
                 <Button onClick={onTvPlayerClick}>Сохранить</Button>
               </Flex>
               <FormHelperText>
-                Ссылка на sportbox, matchtv или youtube
+                Ссылка на sportbox, matchtv, more.tv или youtube
               </FormHelperText>
             </FormControl>
           </Box>

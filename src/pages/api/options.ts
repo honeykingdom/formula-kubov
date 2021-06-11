@@ -70,6 +70,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           { name: 'tvPlayerUrl', value: tvPlayerUrl },
           { name: 'tvPlayerType', value: 'matchtv' },
         );
+      } else if (tvPlayerUrl.startsWith('https://more.tv/online')) {
+        newOptions.push(
+          { name: 'tvPlayerUrl', value: tvPlayerUrl },
+          { name: 'tvPlayerType', value: 'more.tv' },
+        );
       } else {
         const m = YOUTUBE_VIDEO_REGEX.exec(tvPlayerUrl);
 
