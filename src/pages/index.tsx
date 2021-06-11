@@ -176,6 +176,33 @@ const TvPlayerMatchTvIframe = styled(Iframe)`
     transform: translate(20px, 11px) scale(2.377);
   }
 `;
+const TvPlayerMoreTvIframe = styled(Iframe)`
+  width: 1024px;
+
+  @media (min-width: 1280px) {
+    height: 709px;
+    transform: translateY(-130px);
+  }
+  @media (min-width: 1365px) {
+    height: 756px;
+    transform: translateY(-130px);
+  }
+  @media (min-width: 1440px) {
+    transform: translateY(-112px) scale(1.07);
+  }
+  @media (min-width: 1600px) {
+    transform: translateY(-74px) scale(1.23);
+  }
+  @media (min-width: 1680px) {
+    transform: translateY(-55px) scale(1.31);
+  }
+  @media (min-width: 1920px) {
+    transform: translateY(3px) scale(1.54);
+  }
+  @media (min-width: 2540px) {
+    transform: translateY(156px) scale(2.164);
+  }
+`;
 const Copyright = styled.div`
   grid-area: copyright;
   display: flex;
@@ -280,6 +307,9 @@ const Home = () => {
         )}
         {tvPlayerType === 'matchtv' && (
           <TvPlayerMatchTvIframe src={tvPlayerUrl} />
+        )}
+        {tvPlayerType === 'more.tv' && (
+          <TvPlayerMoreTvIframe src={tvPlayerUrl} />
         )}
       </TvPlayer>
       <Copyright>
