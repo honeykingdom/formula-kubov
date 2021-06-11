@@ -186,7 +186,7 @@ const Admin = () => {
                 </Button>
                 <Button
                   onClick={() =>
-                    setTvPlayerInput('https://more.tv/online/russia1_hd')
+                    setTvPlayerInput('https://vitrina.tv/#russia1')
                   }
                 >
                   Россия 1
@@ -201,7 +201,7 @@ const Admin = () => {
                 <Button onClick={onTvPlayerClick}>Сохранить</Button>
               </Flex>
               <FormHelperText>
-                Ссылка на sportbox, matchtv, more.tv или youtube
+                Ссылка на sportbox, matchtv, more.tv, vitrina.tv или youtube
               </FormHelperText>
             </FormControl>
           </Box>

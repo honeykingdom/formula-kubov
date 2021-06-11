@@ -75,6 +75,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           { name: 'tvPlayerUrl', value: tvPlayerUrl },
           { name: 'tvPlayerType', value: 'more.tv' },
         );
+      } else if (tvPlayerUrl.startsWith('https://vitrina.tv/')) {
+        newOptions.push(
+          { name: 'tvPlayerUrl', value: tvPlayerUrl },
+          { name: 'tvPlayerType', value: 'vitrina.tv' },
+        );
       } else {
         const m = YOUTUBE_VIDEO_REGEX.exec(tvPlayerUrl);
 
