@@ -231,6 +231,25 @@ const TvPlayerVitrinaTvIframe = styled(Iframe)`
     transform: translateY(106px) scale(2.15);
   }
 `;
+const TvPlayerSmotrimRuIframe = styled(Iframe)`
+  width: 1024px;
+
+  @media (min-width: 1440px) {
+    transform: scale(1.16);
+  }
+  @media (min-width: 1600px) {
+    transform: translateY(100px) scale(1.33);
+  }
+  @media (min-width: 1680px) {
+    transform: translateY(120px) scale(1.41);
+  }
+  @media (min-width: 1920px) {
+    transform: translateY(250px) scale(1.65);
+  }
+  @media (min-width: 2540px) {
+    transform: translateY(400px) scale(2.34);
+  }
+`;
 const Copyright = styled.div`
   grid-area: copyright;
   display: flex;
@@ -341,6 +360,9 @@ const Home = () => {
         )}
         {tvPlayerType === 'vitrina.tv' && (
           <TvPlayerVitrinaTvIframe src={tvPlayerUrl} />
+        )}
+        {tvPlayerType === 'smotrim.ru' && (
+          <TvPlayerSmotrimRuIframe src={tvPlayerUrl} />
         )}
       </TvPlayer>
       <Copyright>

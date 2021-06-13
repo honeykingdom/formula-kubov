@@ -12,7 +12,8 @@ import getRoles from 'utils/getRoles';
 import updateOptions from 'utils/updateOptions';
 
 // https://regexr.com/3dj5t
-const YOUTUBE_VIDEO_REGEX = /^((?:https?:)?\/\/)?((?:www|m)\.)?(?:youtube\.com|youtu.be)(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/;
+const YOUTUBE_VIDEO_REGEX =
+  /^((?:https?:)?\/\/)?((?:www|m)\.)?(?:youtube\.com|youtu.be)(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/;
 
 const secret = process.env.JWT_SECRET;
 
@@ -48,11 +49,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'PATCH') {
-    const {
-      tvPlayerUrl,
-      twitchPlayer,
-      twitchChats,
-    }: UpdateOptionsDto = req.body;
+    const { tvPlayerUrl, twitchPlayer, twitchChats }: UpdateOptionsDto =
+      req.body;
 
     const newOptions: OptionsRow[] = [];
 
@@ -79,6 +77,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         newOptions.push(
           { name: 'tvPlayerUrl', value: tvPlayerUrl },
           { name: 'tvPlayerType', value: 'vitrina.tv' },
+        );
+      } else if (tvPlayerUrl.startsWith('https://smotrim.ru')) {
+        newOptions.push(
+          { name: 'tvPlayerUrl', value: tvPlayerUrl },
+          { name: 'tvPlayerType', value: 'smotrim.ru' },
         );
       } else {
         const m = YOUTUBE_VIDEO_REGEX.exec(tvPlayerUrl);

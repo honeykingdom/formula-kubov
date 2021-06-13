@@ -201,7 +201,8 @@ const Admin = () => {
                 <Button onClick={onTvPlayerClick}>Сохранить</Button>
               </Flex>
               <FormHelperText>
-                Ссылка на sportbox, matchtv, more.tv, vitrina.tv или youtube
+                Ссылка на sportbox, matchtv, more.tv, vitrina.tv, smotrim.ru или
+                youtube
               </FormHelperText>
             </FormControl>
           </Box>
