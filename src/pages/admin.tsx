@@ -179,7 +179,9 @@ const Admin = () => {
                 </Button>
                 <Button
                   onClick={() =>
-                    setTvPlayerInput('https://static-hbb.1tv.ru/media/stream')
+                    setTvPlayerInput(
+                      'https://static.1tv.ru/eump/embeds/public_sport.html?channel_id=1&channels_api_url=https://api.1tv.ru/v2/special/channels.json',
+                    )
                   }
                 >
                   Первый канал
