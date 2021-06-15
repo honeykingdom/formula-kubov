@@ -23,6 +23,33 @@ const STREAMERS = [
   { name: 'Lasqa', channel: 'lasqa' },
 ] as const;
 
+const PLAYERS = [
+  {
+    title: 'МатчТВ',
+    url: 'https://matchtv.ru/on-air',
+  },
+  {
+    title: 'Первый канал',
+    url: 'https://static.1tv.ru/eump/embeds/public_sport.html?channel_id=1&channels_api_url=https://api.1tv.ru/v2/special/channels.json',
+  },
+  {
+    title: 'Россия 1 (vgtrk.com)',
+    url: 'https://player.vgtrk.com/iframe/live/id/2961',
+  },
+  {
+    title: 'Россия 1 (vitrina.tv)',
+    url: 'https://player.vgtrk.com/iframe/live/id/2961',
+  },
+  {
+    title: 'Россия 1 (smotrim.ru)',
+    url: 'https://smotrim.ru/live/channel/2961',
+  },
+  {
+    title: 'Россия 1 (more.tv)',
+    url: 'https://more.tv/online/russia1_hd',
+  },
+] as const;
+
 const getOptions = async () => {
   const response = await fetch('/api/options');
   const json = await response.json();
@@ -177,29 +204,18 @@ const Admin = () => {
           <Box as="p" mb={4}>
             <FormControl>
               <FormLabel>TV плеер</FormLabel>
-              <ButtonGroup size="sm" mb={2} isAttached variant="outline">
-                <Button
-                  onClick={() => setTvPlayerInput('https://matchtv.ru/on-air')}
-                >
-                  МатчТВ
-                </Button>
-                <Button
-                  onClick={() =>
-                    setTvPlayerInput(
-                      'https://static.1tv.ru/eump/embeds/public_sport.html?channel_id=1&channels_api_url=https://api.1tv.ru/v2/special/channels.json',
-                    )
-                  }
-                >
-                  Первый канал
-                </Button>
-                <Button
-                  onClick={() =>
-                    setTvPlayerInput('https://vitrina.tv/#russia1')
-                  }
-                >
-                  Россия 1
-                </Button>
-              </ButtonGroup>
+              <Box mb={2}>
+                {PLAYERS.map(({ title, url }) => (
+                  <Button
+                    key={title}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setTvPlayerInput(url)}
+                  >
+                    {title}
+                  </Button>
+                ))}
+              </Box>
               <Flex>
                 <Input
                   mr={2}
