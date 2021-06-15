@@ -15,16 +15,20 @@ const globalStyles = css`
     background-color: #18181b;
   }
 `;
-const HomeRoot = styled.div`
+const HomeRoot = styled.div<{ $hasPlayer?: boolean }>`
   display: grid;
   height: 100vh;
   width: 100vw;
   grid-template-rows: 192px auto 48px;
   grid-template-columns: auto 340px;
-  grid-template-areas:
-    'tv-player player'
+  grid-template-areas: ${(p) =>
+    p.$hasPlayer
+      ? `'tv-player player'
     'tv-player chat'
-    'copyright chat';
+         'copyright chat'`
+      : `'tv-player chat'
+         'tv-player chat'
+         'copyright chat'`};
 `;
 const Iframe = styled.iframe`
   border: none;
@@ -301,11 +305,11 @@ const Home = () => {
   }, []);
 
   return (
-    <HomeRoot>
+    <HomeRoot $hasPlayer={!!twitchPlayer}>
       <Head>
         <title>Formula Kubov</title>
       </Head>
-      {options && (
+      {options && twitchPlayer && (
         <Player
           allow="autoplay"
           allowFullScreen

@@ -147,6 +147,12 @@ const Admin = () => {
                     {name}
                   </Button>
                 ))}
+                <Button
+                  isActive={options.twitchPlayer === ''}
+                  onClick={onTwitchPlayerClick('')}
+                >
+                  Выкл
+                </Button>
               </ButtonGroup>
             </FormControl>
           </Box>
