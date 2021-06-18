@@ -1,3 +1,6 @@
+// TODO: https://github.com/nextauthjs/next-auth/issues/988#issuecomment-830623141
+import 'core-js';
+import 'regenerator-runtime/runtime';
 import { useEffect, useState } from 'react';
 import {
   ChakraProvider,
@@ -14,6 +17,7 @@ import {
   extendTheme,
   ColorModeScript,
 } from '@chakra-ui/react';
+import { Provider as AuthProvider } from 'next-auth/client';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import { GetOptionsResponse, Options, Role, UpdateOptionsDto } from 'types';
 
@@ -243,11 +247,16 @@ const theme = extendTheme({
   },
 });
 
-const AdminPage = () => (
-  <ChakraProvider>
-    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-    <Admin />
-  </ChakraProvider>
+const AdminPage = ({ session }) => (
+  <AuthProvider
+    session={session}
+    options={{ keepAlive: Infinity, clientMaxAge: Infinity }}
+  >
+    <ChakraProvider>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <Admin />
+    </ChakraProvider>
+  </AuthProvider>
 );
 
 export default AdminPage;
