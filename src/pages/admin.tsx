@@ -42,7 +42,7 @@ const PLAYERS = [
   },
   {
     title: 'Россия 1 (vitrina.tv)',
-    url: 'https://player.vgtrk.com/iframe/live/id/2961',
+    url: 'https://vitrina.tv/#russia1',
   },
   {
     title: 'Россия 1 (smotrim.ru)',
