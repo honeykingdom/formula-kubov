@@ -17,8 +17,13 @@ import {
   extendTheme,
   ColorModeScript,
 } from '@chakra-ui/react';
-import { Provider as AuthProvider } from 'next-auth/client';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { Session } from 'next-auth';
+import {
+  Provider as AuthProvider,
+  signIn,
+  signOut,
+  useSession,
+} from 'next-auth/client';
 import { GetOptionsResponse, Options, Role, UpdateOptionsDto } from 'types';
 
 const STREAMERS = [
@@ -83,13 +88,13 @@ const Admin = () => {
 
   useEffect(() => {
     (async () => {
-      const { options, role } = await getOptions();
+      const data = await getOptions();
 
-      setOptions(options);
-      setRole(role);
+      setOptions(data.options);
+      setRole(data.role);
 
-      setTvPlayerInput(options.tvPlayerUrl);
-      setTwitchChatsInput(options.twitchChats.join(';'));
+      setTvPlayerInput(data.options.tvPlayerUrl);
+      setTwitchChatsInput(data.options.twitchChats.join(';'));
     })();
   }, []);
 
@@ -247,7 +252,7 @@ const theme = extendTheme({
   },
 });
 
-const AdminPage = ({ session }) => (
+const AdminPage = ({ session }: { session: Session }) => (
   <AuthProvider
     session={session}
     options={{ keepAlive: Infinity, clientMaxAge: Infinity }}

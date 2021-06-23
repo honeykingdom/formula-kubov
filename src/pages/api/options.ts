@@ -25,6 +25,7 @@ const isSportBoxPlaylist = async (url: string) => {
   return isPlaylist;
 };
 
+// eslint-disable-next-line consistent-return
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const user = (await jwt.getToken({ req, secret })) as User;
 

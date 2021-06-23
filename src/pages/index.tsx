@@ -296,11 +296,11 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      const options = await getOptions();
+      const optionsData = await getOptions();
 
-      setOptions(options);
-      setActiveChat(options.twitchChats[0]);
-      setIsTooltipVisible(options.tvPlayerIsPlaylist);
+      setOptions(optionsData);
+      setActiveChat(optionsData.twitchChats[0]);
+      setIsTooltipVisible(optionsData.tvPlayerIsPlaylist);
     })();
   }, []);
 
