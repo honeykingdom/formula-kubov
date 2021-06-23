@@ -300,7 +300,10 @@ const Home = () => {
 
       setOptions(optionsData);
       setActiveChat(optionsData.twitchChats[0]);
-      setIsTooltipVisible(optionsData.tvPlayerIsPlaylist);
+      setIsTooltipVisible(
+        optionsData.tvPlayerIsPlaylist &&
+          optionsData.tvPlayerType === 'sportbox',
+      );
     })();
   }, []);
 
