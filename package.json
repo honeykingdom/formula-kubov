@@ -32,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.3.1",
@@ -49,13 +50,16 @@
       "project": "./tsconfig.json"
     },
     "extends": [
+      "next",
       "airbnb-typescript",
       "airbnb/hooks",
       "plugin:@typescript-eslint/recommended",
-      "prettier",
-      "prettier/react",
-      "prettier/@typescript-eslint"
-    ]
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "react/no-unescaped-entities": "off"
+    }
   },
   "prettier": {
     "singleQuote": true,
