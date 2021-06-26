@@ -99,7 +99,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
 
-    if (twitchPlayer) {
+    if (typeof twitchPlayer === 'string') {
       newOptions.push({ name: 'twitchPlayer', value: twitchPlayer });
     }
 
