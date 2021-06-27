@@ -12,11 +12,12 @@ import {
   Heading,
   FormControl,
   FormHelperText,
-  Flex,
   useToast,
   extendTheme,
   ColorModeScript,
 } from '@chakra-ui/react';
+import Select from 'react-select';
+import type { ThemeConfig } from 'react-select/src/theme';
 import { Session } from 'next-auth';
 import {
   Provider as AuthProvider,
@@ -24,13 +25,24 @@ import {
   signOut,
   useSession,
 } from 'next-auth/client';
-import { GetOptionsResponse, Options, Role, UpdateOptionsDto } from 'types';
+import type {
+  GetOptionsResponse,
+  Options,
+  Role,
+  UpdateOptionsDto,
+} from 'types';
 
 const STREAMERS = [
   { name: 'Melharucos', channel: 'melharucos' },
   { name: 'HoneyMad', channel: 'honeymad' },
   { name: 'Lasqa', channel: 'lasqa' },
+  { name: 'Segall', channel: 'segall' },
 ] as const;
+
+const CHATS = STREAMERS.map(({ channel }) => ({
+  label: channel,
+  value: channel,
+}));
 
 const PLAYERS = [
   {
@@ -59,6 +71,23 @@ const PLAYERS = [
   },
 ] as const;
 
+// https://github.com/JedWatson/react-select/issues/3692#issuecomment-523425096
+const SELECT_THEME: ThemeConfig = (theme) => ({
+  ...theme,
+  colors: {
+    ...theme.colors,
+    danger: 'var(--chakra-colors-red-400)',
+    dangerLight: 'var(--chakra-colors-red-100)',
+    neutral0: 'var(--chakra-colors-gray-800)',
+    neutral10: 'var(--chakra-colors-whiteAlpha-400)',
+    neutral20: 'var(--chakra-colors-whiteAlpha-300)',
+    neutral30: 'var(--chakra-colors-whiteAlpha-400)',
+    neutral80: 'var(--chakra-colors-whiteAlpha-900)',
+    primary25: 'var(--chakra-colors-whiteAlpha-300)',
+    primary50: 'var(--chakra-colors-whiteAlpha-400)',
+  },
+});
+
 const getOptions = async () => {
   const response = await fetch('/api/options');
   const json = await response.json();
@@ -76,6 +105,8 @@ const updateOptions = async (newOptions: UpdateOptionsDto) => {
   return response.status === 200;
 };
 
+type SelectOption = { label: string; value: string };
+
 const Admin = () => {
   const toast = useToast();
 
@@ -84,7 +115,7 @@ const Admin = () => {
   const [role, setRole] = useState<Role>();
 
   const [tvPlayerInput, setTvPlayerInput] = useState('');
-  const [twitchChatsInput, setTwitchChatsInput] = useState('');
+  const [twitchChatsInput, setTwitchChatsInput] = useState<SelectOption[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -94,7 +125,9 @@ const Admin = () => {
       setRole(data.role);
 
       setTvPlayerInput(data.options.tvPlayerUrl);
-      setTwitchChatsInput(data.options.twitchChats.join(';'));
+      setTwitchChatsInput(
+        data.options.twitchChats.map((chat) => ({ label: chat, value: chat })),
+      );
     })();
   }, []);
 
@@ -119,7 +152,7 @@ const Admin = () => {
   };
 
   const onTwitchChatsClick = async () => {
-    const twitchChats = twitchChatsInput.split(';').map((s) => s.trim());
+    const twitchChats = twitchChatsInput.map((chat) => chat.value);
     const isUpdated = await updateOptions({ twitchChats });
 
     toast({
@@ -158,7 +191,7 @@ const Admin = () => {
       )}
 
       {!session && (
-        <Box as="p" mb={4} textAlign="center">
+        <Box mb={4} textAlign="center">
           <Button onClick={() => signIn('twitch')}>Войти</Button>
         </Box>
       )}
@@ -170,7 +203,7 @@ const Admin = () => {
           rounded="lg"
           shadow="1px 1px 3px rgba(0,0,0,0.3)"
         >
-          <Box as="p" mb={4}>
+          <Box mb={4}>
             <FormControl>
               <FormLabel>Twitch плеер</FormLabel>
               <ButtonGroup size="sm" isAttached variant="outline">
@@ -193,24 +226,27 @@ const Admin = () => {
             </FormControl>
           </Box>
 
-          <Box as="p" mb={4}>
+          <Box mb={4}>
             <FormControl>
               <FormLabel>Twitch чаты</FormLabel>
-              <Flex>
-                <Input
-                  mr={2}
+              <Box mb={2}>
+                <Select
                   value={twitchChatsInput}
-                  onChange={(e) => setTwitchChatsInput(e.target.value)}
+                  options={CHATS}
+                  theme={SELECT_THEME}
+                  isMulti
+                  onChange={(chats) =>
+                    setTwitchChatsInput(chats as unknown as SelectOption[])
+                  }
                 />
-                <Button onClick={onTwitchChatsClick}>Сохранить</Button>
-              </Flex>
-              <FormHelperText>
-                Разделять через точку с запятой ";"
-              </FormHelperText>
+              </Box>
+              <Button size="sm" onClick={onTwitchChatsClick}>
+                Сохранить
+              </Button>
             </FormControl>
           </Box>
 
-          <Box as="p" mb={4}>
+          <Box mb={4}>
             <FormControl>
               <FormLabel>TV плеер</FormLabel>
               <Box mb={2}>
@@ -225,18 +261,17 @@ const Admin = () => {
                   </Button>
                 ))}
               </Box>
-              <Flex>
-                <Input
-                  mr={2}
-                  value={tvPlayerInput}
-                  onChange={(e) => setTvPlayerInput(e.target.value)}
-                />
-                <Button onClick={onTvPlayerClick}>Сохранить</Button>
-              </Flex>
-              <FormHelperText>
+              <Input
+                value={tvPlayerInput}
+                onChange={(e) => setTvPlayerInput(e.target.value)}
+              />
+              <FormHelperText mb={2}>
                 Ссылка на sportbox, matchtv, more.tv, vitrina.tv, smotrim.ru или
                 youtube
               </FormHelperText>
+              <Button size="sm" onClick={onTvPlayerClick}>
+                Сохранить
+              </Button>
             </FormControl>
           </Box>
         </Box>
