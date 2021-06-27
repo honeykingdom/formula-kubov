@@ -20,15 +20,17 @@
     "node-fetch": "^2.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-select": "^4.3.1",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^3.4.2",
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "@types/node-fetch": "^2.5.10",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
+    "@types/react-select": "^4.0.16",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
@@ -38,7 +40,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
-    "prettier": "^2.3.1",
+    "prettier": "^2.3.2",
     "typescript": "^4.3.4"
   },
   "eslintConfig": {
