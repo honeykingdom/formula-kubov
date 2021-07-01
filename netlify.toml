@@ -1,5 +1,5 @@
 [build]
-command = ""
+command = "yarn build"
 functions = "out_functions"
 publish = "out_publish"
 
