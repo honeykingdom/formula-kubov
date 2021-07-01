@@ -12,7 +12,7 @@
     "@chakra-ui/react": "^1.6.4",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@supabase/supabase-js": "^1.17.0",
+    "@supabase/supabase-js": "^1.15.1",
     "core-js": "2",
     "framer-motion": "^4.1.17",
     "next": "^11.0.1",
@@ -24,14 +24,14 @@
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^3.6.0",
+    "@netlify/plugin-nextjs": "^3.4.2",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.5",
     "@types/node-fetch": "^2.5.10",
-    "@types/react": "^17.0.12",
+    "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "@types/react-select": "^4.0.16",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-next": "^11.0.1",
@@ -41,7 +41,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "prettier": "^2.3.2",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.4"
   },
   "eslintConfig": {
     "env": {
