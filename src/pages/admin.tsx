@@ -1,4 +1,6 @@
-// TODO: remove nodemailer dependency`
+// TODO: https://github.com/nextauthjs/next-auth/issues/988#issuecomment-830623141
+import 'core-js';
+import 'regenerator-runtime/runtime';
 import { useEffect, useState } from 'react';
 import {
   ChakraProvider,
@@ -17,7 +19,12 @@ import {
 import Select from 'react-select';
 import type { ThemeConfig } from 'react-select/src/theme';
 import { Session } from 'next-auth';
-import { SessionProvider, signIn, signOut, useSession } from 'next-auth/react';
+import {
+  Provider as AuthProvider,
+  signIn,
+  signOut,
+  useSession,
+} from 'next-auth/client';
 import type {
   GetOptionsResponse,
   Options,
@@ -281,16 +288,15 @@ const theme = extendTheme({
 });
 
 const AdminPage = ({ session }: { session: Session }) => (
-  <SessionProvider
+  <AuthProvider
     session={session}
-    staleTime={Infinity}
-    refetchInterval={Infinity}
+    options={{ keepAlive: Infinity, clientMaxAge: Infinity }}
   >
     <ChakraProvider>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Admin />
     </ChakraProvider>
-  </SessionProvider>
+  </AuthProvider>
 );
 
 export default AdminPage;
