@@ -24,7 +24,7 @@ jobs:
 
       - name: Deploy to Netlify
         run: |
-          yarn global add netlify-cli@3.39.0
+          yarn global add netlify-cli
           "$(yarn global bin)/netlify" deploy --build --prod
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
