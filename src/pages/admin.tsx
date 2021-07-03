@@ -248,6 +248,7 @@ const Admin = () => {
                     key={title}
                     variant="outline"
                     size="sm"
+                    isActive={tvPlayerInput === url}
                     onClick={() => setTvPlayerInput(url)}
                   >
                     {title}
